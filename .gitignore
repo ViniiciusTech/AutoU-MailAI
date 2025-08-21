@@ -1,6 +1,7 @@
 # Arquivos Python
 *.pyc
 __pycache__/
+*.reponder.py
 
 # Banco de dados local
 *.db
