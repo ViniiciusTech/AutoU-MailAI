@@ -1,7 +1,6 @@
 # Arquivos Python
 *.pyc
 __pycache__/
-*utils.py
 
 # Banco de dados local
 *.db
