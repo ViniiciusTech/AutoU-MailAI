@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Email Classifier - Sistema de Classificação</title>
+    <link rel="stylesheet" href="/app/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">🧠</div>
+                    <div>
+                        <h1>Ai Email Classifier</h1>
+                        <p>Sitema Inteligente de Classificação de Emails</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+           <!-- Estatística -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>{{ stats.total_emails }}</h3>
+                    <p>Emails Processados</p>
+                </div>
+                <div class="stat-card">
+                    <h3>{{ stats.productive }}</h3>
+                    <p>Produtivos</p>
+                </div>
+                <div class="stat-card">
+                    <h3>{{ stats.unproductive }}</h3>
+                    <p>Improdutivos</p>
+                </div>
+                <div class="stat-card">
+                    <h3>{{ "%.1f"|format(stats.accuracy) }}%</h3>
+                    <p>Precisão</p>
+                </div>
+            </div>
+
+            <div class="main-grid"></div>
+            <!-- Formulário de Entrada -->
+             <dv class="input-section">
+                <div class="card">
+                    <h2>📧 Entrada de Email</h2>
+                    <p>Cole o texto do email ou faça upload de um arquivo</p>
+
+                    <form id="emailForm" method="POST" enctype="multipart/form-data">
+                        <div class="tabs">
+                            <button type="button" class="tab-btn active" onclick="showTab('text')" >Texto</button>
+                            <button type="button" class="tab-btn" onclick="showTab('File')">Upload</button>
+                        </div>
+
+                        <div id="text-tab" class="tab-content active">
+                                <textarea 
+                                    name="email_text" 
+                                    placeholder="Cole aqui o conteúdo do email que deseja classificar..."
+                                    rows="10"
+                                >{{ request.form.get('email_text', '') }}</textarea>
+                            </div>
+
+                            <div id="file-tab" class="tab-content">
+                                <div class="file-upload">
+                                    <input type="file" name="email_file" accept=".txt,.pdf" id="fileInput">
+                                    <label for="fileInput">
+                                        📎 Escolher arquivo (.txt, .pdf)
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-primary">
+                                ⚡Classificar Email
+                            </button>
+                    </form>
+                </div>
+             </dv>
+
+             <!-- Resultados -->
+                <div class="results-section">
+                    {% if result %}
+                    <div class="card result-card">
+                        <h2>🎯 Resultado da Classificação</h2>
+                        
+                        <div class="result-category {{ 'productive' if result.category == 'Produtivo' else 'unproductive' }}">
+                            <h3>{{ result.category }}</h3>
+                            <p>Confiança: {{ result.confidence }}%</p>
+                        </div>
+
+                        <div class="result-details">
+                            <div class="detail-item">
+                                <strong>Sentimento:</strong> {{ result.sentiment }}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Palavras-chave:</strong> {{ result.keywords|join(', ') }}
+                            </div>
+                        </div>
+
+                        <div class="suggested-response">
+                            <h4>💬 Resposta Sugerida:</h4>
+                            <div class="response-text">{{ result.suggested_response }}</div>
+                            <button onclick="copyResponse()" class="btn-copy">📋 Copiar Resposta</button>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="card placeholder-card">
+                        <div class="placeholder-content">
+                            <div class="placeholder-icon">🤖</div>
+                            <h3>Aguardando Classificação</h3>
+                            <p>Insira um email e clique em "Classificar" para ver os resultados</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <<!-- Histórico de Emails -->
+            <div class="history-section">
+                <div class="card">
+                    <h2>📊 Histórico de Emails Processados</h2>
+                    <div class="history-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Categoria</th>
+                                    <th>Confiança</th>
+                                    <th>Sentimento</th>
+                                    <th>Palavras-chave</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for email in history %}
+                                <tr>
+                                    <td>{{ email.created_at.strftime('%d/%m/%Y %H:%M') }}</td>
+                                    <td>
+                                        <span class="category-badge {{ 'productive' if email.category == 'Produtivo' else 'unproductive' }}">
+                                            {{ email.category }}
+                                        </span>
+                                    </td>
+                                    <td>{{ email.confidence }}%</td>
+                                    <td>{{ email.sentiment }}</td>
+                                    <td>{{ email.keywords }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/app/static/script.js"></script>
+</body>
+</html>
