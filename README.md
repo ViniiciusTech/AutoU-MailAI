@@ -21,14 +21,10 @@
 
 - [Sobre o Projeto](#-sobre-o-projeto)
 - [Funcionalidades](#-funcionalidades)
-- [Tecnologias](#-tecnologias-utilizadas)
 - [Instalação Rápida](#-instalação-rápida)
 - [Como Usar](#-como-usar)
-- [Estrutura do Projeto](#-estrutura-do-projeto)
 - [API Documentation](#-api-documentation)
-- [Configuração Avançada](#-configuração-avançada)
 - [Contribuição](#-contribuição)
-- [Licença](#-licença)
 
 ## 🎯 Sobre o Projeto
 
@@ -136,26 +132,6 @@ Abra seu navegador e acesse: **http://localhost:5000**
 - Acesse a seção **"Histórico de Emails Processados"**
 - Visualize todas as classificações anteriores
 - Analise métricas de performance
-
-## 📁 Estrutura do Projeto
-
-\`\`\`
-AutoU-MailAI/
-├── 📁 app/                     # Aplicação principal
-│   ├── 📁 static/              # Arquivos estáticos
-│   │   ├── 🎨 style.css        # Estilos CSS
-│   │   └── ⚡ script.js        # JavaScript
-│   ├── 📁 templates/           # Templates HTML
-│   │   └── 🌐 index.html       # Interface principal
-│   ├── 🐍 main.py              # Servidor Flask
-│   ├── 🧠 classifier.py        # Lógica de classificação
-│   ├── 🤖 responder.py         # Gerador de respostas
-│   └── 🔧 utils.py             # Utilitários e BD
-├── 📁 data/                    # Base de dados
-│   └── 🗄️ emails.db           # SQLite database
-├── 📋 requirements.txt         # Dependências Python
-└── 📖 README.md               # Documentação
-\`\`\`
 
 ## 🔌 API Documentation
 
