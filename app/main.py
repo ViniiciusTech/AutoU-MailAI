@@ -80,7 +80,7 @@ def index():
                 'suggested_response': response
             }
 
-            save_email_result(email_content, result)
+            save_email_result(email_content, result, DATABASE)
 
     stats = get_stats(DATABASE)
     history = get_email_history()
