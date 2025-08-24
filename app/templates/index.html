@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Email Classifier - Sistema de Classificação</title>
-    <link rel="stylesheet" href="/app/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
@@ -51,7 +51,7 @@
                     <form id="emailForm" method="POST" enctype="multipart/form-data">
                         <div class="tabs">
                             <button type="button" class="tab-btn active" onclick="showTab('text')" >Texto</button>
-                            <button type="button" class="tab-btn" onclick="showTab('File')">Upload</button>
+                            <button type="button" class="tab-btn" onclick="showTab('file')">Upload</button>
                         </div>
 
                         <div id="text-tab" class="tab-content active">
@@ -153,6 +153,6 @@
         </main>
     </div>
 
-    <script src="/app/static/script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
